@@ -202,7 +202,6 @@ namespace rpc_net_lib
                 AddToArray(UTF8Encoding.UTF8.GetBytes(returnid), ref buff);
                 StringWriter sww = new StringWriter();
                 XmlWriter writer = XmlWriter.Create(sww);
-                List<string> strl = new List<string>();
 
                 XmlSerializer xss = new XmlSerializer(args.GetType());
                 xss.Serialize(sww, args);
