@@ -1,14 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -23,7 +21,6 @@ namespace rpc_net_lib
             main_auth = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
             net_main = new Thread(new ThreadStart(this.net_main_reciever));
             nfuncs = new net_functions(function_stack);
-            main_auth.Connect(main_con_ipe);
             if (startThread)
                 net_main.Start();
         }
@@ -58,6 +55,11 @@ namespace rpc_net_lib
         public object Execute(string net_event_name, object[] eventargs, bool isvoid = false)
         {
             return nfuncs.netevent(net_event_name, eventargs, main_con_ipe, main_auth, isvoid);
+        }
+
+        public bool Init()
+        {
+            return (bool)Execute("_Init", new object[0], main_con_ipe);
         }
 
         public void Abort()
@@ -178,6 +180,11 @@ namespace rpc_net_lib
 
                 net_event_t temp = netp.net_event_proccess(main);
 
+                if(temp.main.Name == "_Init")
+                {
+                    temp.args = new object[] { from };
+                }
+
                 if (main != temp)
                 {
                     object returnobj = null;
@@ -192,6 +199,10 @@ namespace rpc_net_lib
                     }
 
                     this.netevent("___net___return", new object[] { main.return_id, returnobj }, from, sender, true);
+                }
+                else
+                {
+                    throw new Exception("Function Not Defined");
                 }
             }
 
@@ -335,6 +346,4 @@ namespace rpc_net_lib
     {
 
     }
-
-
 }
