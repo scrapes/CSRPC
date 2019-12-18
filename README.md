@@ -1,5 +1,8 @@
-# rpc_net_lib
+# CsRCP
 A easy to use, UDP based C# RPC libary.
+
+This libary does provide an easy way to make function calls on the remote machine using coustom parameters. 
+This libary is experimental and not maintained. 
 
 <a href="https://travis-ci.org/scrapes/rpc_net_lib/"><img src="https://api.travis-ci.org/scrapes/rpc_net_lib.svg?branch=master"></a>
 
