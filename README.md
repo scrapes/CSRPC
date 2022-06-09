@@ -1,4 +1,4 @@
-# CsRCP
+# CsRPC
 A easy to use, UDP based C# RPC libary.
 
 This libary does provide an easy way to make function calls on the remote machine using coustom parameters. 
